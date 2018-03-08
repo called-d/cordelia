@@ -6,12 +6,6 @@ import json, os, re, random
 import re
 from mastodon import Mastodon, StreamListener
 
-mastodon = Mastodon(
-    client_id="my_clientcred_workers.txt",
-    access_token="my_usercred_workers.txt",
-    api_base_url = "https://mstdn-workers.com"
-)
-
 censorship_command = re.compile(u'^コーデリア\s禁止用語')
 
 #学習辞書
@@ -61,9 +55,6 @@ def set_word3(dic , s3):
     if not w3 in dic[w1][w2]:
         dic[w1][w2][w3] = 0
     dic[w1][w2][w3] += 1
-
-if os.path.exists(dict_file):
-    dic = json.load(open(dict_file, "r"))
 
 def make_sentence(head):
     if not head in dic:
@@ -209,5 +200,15 @@ class MyStreamListener(StreamListener):
             default_analisys(notification['status'])
 
 
-listener = MyStreamListener()
-mastodon.stream_user(listener)
+if __name__ == "__main__":
+    if os.path.exists(dict_file):
+        dic = json.load(open(dict_file, "r"))
+
+    mastodon = Mastodon(
+        client_id="my_clientcred_workers.txt",
+        access_token="my_usercred_workers.txt",
+        api_base_url = "https://mstdn-workers.com"
+    )
+
+    listener = MyStreamListener()
+    mastodon.stream_user(listener)
