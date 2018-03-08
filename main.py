@@ -124,6 +124,7 @@ def content_to(status):
     content = remove_mention(content)
     content = remove_hashtag(content)
     content = remove_image(content, status)
+    return content
 
 
 #-----リプライ関数群---------------------------------------------------------
