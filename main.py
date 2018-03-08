@@ -6,7 +6,7 @@ import json, os, re, random
 import re
 from mastodon import Mastodon, StreamListener
 
-censorship_command = re.compile(u'^コーデリア\s禁止用語')
+censorship_command = re.compile(r'^コーデリア\s禁止用語')
 
 #学習辞書
 dict_file = "dict.json"
@@ -133,7 +133,7 @@ def listen_func_check(status):
         censor_dic = json.load(open(censor_file, "r"))
 
     content = content_to(status)
-    censor_text = re.sub(u'[.*コーデリア\s禁止用語.*]', '', content)
+    censor_text = re.sub(r'[.*コーデリア\s禁止用語.*]', '', content)
     if(censor_text):
         censor_dic['censorships'].append(censor_text)
         json.dump(censor_dic, open(censor_file, "w", encoding="utf-8"))
