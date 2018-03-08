@@ -1,4 +1,5 @@
 import unittest
+import cordelia_main as cordelia
 
 dictionary_file = "dict.json"
 
